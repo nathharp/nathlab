@@ -5,13 +5,14 @@
 # OS selection
 
 PS3='Please enter your OS choice: '
-options=("Option 1" "Quit")
+options=("CentOS7" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
-        "Option 1")
+        "CentOS7")
             echo "you chose CentOS 7"
             DISKIMAGE=centos7.qcow2
+            break
             ;;
         "Quit")
             break
