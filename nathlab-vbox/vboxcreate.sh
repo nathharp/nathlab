@@ -2,6 +2,23 @@
 
 # the objective of this script is to automate the creation of VMs under virtualbox.  Although this could be done under Vagrant, I want to have a bit more control over what is being done!
 
+# OS selection
+
+PS3='Please enter your OS choice: '
+options=("Option 1" "Quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "Option 1")
+            echo "you chose CentOS 7"
+            DISKIMAGE=centos7.qcow2
+            ;;
+        "Quit")
+            break
+            ;;
+        *) echo invalid option;;
+    esac
+done
 
 
 # example prompt with default
