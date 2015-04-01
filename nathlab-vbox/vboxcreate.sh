@@ -11,6 +11,7 @@ do
     case $opt in
         "CentOS7")
             OS=centos7
+            OSTYPE=RedHat_64
             break
             ;;
         "Quit")
@@ -53,7 +54,7 @@ do
         *) echo invalid option;;
     esac
 done
-
+echo "the type is $TYPE"
 
 # define instance types
 if [ $TYPE == "micro" ]; then
@@ -133,6 +134,9 @@ done
 #
 #	# lets work out the naming if there is more than one instance
 #	if [ $QUANTITY == 1 ]
-#	# create and register VM
+#	
 #
 #done
+
+# create and register VM
+VBoxManage createvm --name $NAME --ostype $OSTYPE --register
