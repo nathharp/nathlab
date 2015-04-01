@@ -92,16 +92,22 @@ echo $DISK1
 # query quantities
 
 
-default=1
-read -p "how many instances do you require [$default]: " REPLY
-QUANTITY=${REPLY:-$default}
+#default=1
+#read -p "how many instances do you require [$default]: " REPLY
+#QUANTITY=${REPLY:-$default}
+
+# instance name
+
+read -p "what do you want to call the instance?: " REPLY
+NAME=${REPLY}
 
 # summary before creation
 
 echo "CONFIRMATION:"
 echo "OS selection is $OS"
 echo "instance type is $TYPE"
-echo "quantity: $QUANTITY"
+#echo "quantity: $QUANTITY"
+echo "name: $NAME"
 
 PS3='do you want to continue?: '
 options=("Yes" "Quit")
@@ -121,7 +127,10 @@ do
 done
 
 # for i in ${seq 1 $QUANTITY}
-do
-	# create and register VM
-
-done
+#do
+#
+#	# lets work out the naming if there is more than one instance
+#	if [ $QUANTITY == 1 ]
+#	# create and register VM
+#
+#done
