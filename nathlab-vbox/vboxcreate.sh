@@ -54,6 +54,41 @@ do
     esac
 done
 
+# define instance types
+if [ $TYPE="micro" ]
+	VCPUS=1
+	RAM=512
+	DISKS=1
+	DISK1=10
+elseif [ $TYPE="small" ]
+	VCPUS=2
+	RAM=1024
+	DISKS=1
+	DISK1=12
+elseif [ $TYPE="medium" ]
+	VCPUS=2
+	RAM=2048
+	DISKS=1
+	DISK1=20
+elseif [ $TYPE="large" ]
+	VCPUS=2
+	RAM=4096
+	DISK1=30
+elseif [ $TYPE="storage" ]
+	VCPUS=2
+	RAM=2048
+	DISKS=3
+	DISK1=10
+else
+	echo "instance type broken"
+	exit
+fi
+
+echo $VCPUS
+echo $RAM
+echo $DISKS
+echo $DISK1
+
 # query quantities
 
 
@@ -87,6 +122,6 @@ done
 
 # for i in ${seq 1 $QUANTITY}
 do
-
+	# create and register VM
 
 done
