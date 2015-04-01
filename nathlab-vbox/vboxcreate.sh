@@ -144,3 +144,7 @@ VBoxManage createvm --name $NAME --ostype $OSTYPE --register
 # set VCPUs and RAM
 
 VBoxManage modifyvm $NAME --cpus $VCPUS --memory $RAM
+
+# connect the network interface
+
+VBoxManage modifyvm $NAME --nic1 hostonly --hostonlyadapter1 vboxnet0 --nictype1 virtio
