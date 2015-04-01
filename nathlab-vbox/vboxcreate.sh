@@ -54,32 +54,16 @@ do
     esac
 done
 
+# query quantities
 
-# example prompt with default
-default=192.168.0.4
-read -p "Enter IP address [$default]: " REPLY
-REPLY=${REPLY:-$default}
-echo "IP is $REPLY"
 
-# Bash Menu Script Example
+default=1
+read -p "how many instances do you require [$default]: " QUANTITY
+QUANTITY=${REPLY:-$default}
 
-PS3='Please enter your choice: '
-options=("Option 1" "Option 2" "Option 3" "Quit")
-select opt in "${options[@]}"
-do
-    case $opt in
-        "Option 1")
-            echo "you chose choice 1"
-            ;;
-        "Option 2")
-            echo "you chose choice 2"
-            ;;
-        "Option 3")
-            echo "you chose choice 3"
-            ;;
-        "Quit")
-            break
-            ;;
-        *) echo invalid option;;
-    esac
-done
+# summary before creation
+
+echo "CONFIRMATION:"
+echo "OS selection is $OS"
+echo "instance type is $TYPE"
+echo "quantity: $QUANTITY"
