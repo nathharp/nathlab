@@ -48,7 +48,7 @@ do
             break
             ;; 
         "Quit")
-            break
+            exit
             ;;
         *) echo invalid option;;
     esac
@@ -58,7 +58,7 @@ done
 
 
 default=1
-read -p "how many instances do you require [$default]: " QUANTITY
+read -p "how many instances do you require [$default]: " REPLY
 QUANTITY=${REPLY:-$default}
 
 # summary before creation
@@ -68,7 +68,7 @@ echo "OS selection is $OS"
 echo "instance type is $TYPE"
 echo "quantity: $QUANTITY"
 
-PS3='do you want to continue?'
+PS3='do you want to continue?: '
 options=("Yes" "Quit")
 select opt in "${options[@]}"
 do
