@@ -54,27 +54,29 @@ do
     esac
 done
 
+
 # define instance types
-if [ $TYPE="micro" ]; then
+if [ $TYPE == "micro" ]; then
 	VCPUS=1
 	RAM=512
 	DISKS=1
 	DISK1=10
-elif [ $TYPE="small" ]; then
+elif [ $TYPE == "small" ]; then
 	VCPUS=2
 	RAM=1024
 	DISKS=1
 	DISK1=12
-elif [ $TYPE="medium" ]; then
+elif [ $TYPE == "medium" ]; then
 	VCPUS=2
 	RAM=2048
 	DISKS=1
 	DISK1=20
-elif [ $TYPE="large" ]; then
+elif [ $TYPE == "large" ]; then
 	VCPUS=2
 	RAM=4096
+	DISKS=1
 	DISK1=30
-elif [ $TYPE="storage" ]; then
+elif [ $TYPE == "storage" ]; then
 	VCPUS=2
 	RAM=2048
 	DISKS=3
