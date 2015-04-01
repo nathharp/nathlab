@@ -140,3 +140,7 @@ done
 
 # create and register VM
 VBoxManage createvm --name $NAME --ostype $OSTYPE --register
+
+# set VCPUs and RAM
+
+VBoxManage modifyvm $NAME --cpus $VCPUS --memory $RAM
