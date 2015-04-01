@@ -148,3 +148,7 @@ VBoxManage modifyvm $NAME --cpus $VCPUS --memory $RAM
 # connect the network interface
 
 VBoxManage modifyvm $NAME --nic1 hostonly --hostonlyadapter1 vboxnet0 --nictype1 virtio
+
+# setting some default VM settings
+
+VBoxManage modifyvm $NAME --firmware efi
