@@ -55,26 +55,26 @@ do
 done
 
 # define instance types
-if [ $TYPE="micro" ]
+if [ $TYPE="micro" ]; then
 	VCPUS=1
 	RAM=512
 	DISKS=1
 	DISK1=10
-elseif [ $TYPE="small" ]
+elif [ $TYPE="small" ]; then
 	VCPUS=2
 	RAM=1024
 	DISKS=1
 	DISK1=12
-elseif [ $TYPE="medium" ]
+elif [ $TYPE="medium" ]; then
 	VCPUS=2
 	RAM=2048
 	DISKS=1
 	DISK1=20
-elseif [ $TYPE="large" ]
+elif [ $TYPE="large" ]; then
 	VCPUS=2
 	RAM=4096
 	DISK1=30
-elseif [ $TYPE="storage" ]
+elif [ $TYPE="storage" ]; then
 	VCPUS=2
 	RAM=2048
 	DISKS=3
