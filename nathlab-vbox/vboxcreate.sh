@@ -10,10 +10,43 @@ select opt in "${options[@]}"
 do
     case $opt in
         "CentOS7")
-            echo "you chose CentOS 7"
-            DISKIMAGE=centos7.qcow2
+            OS=centos7
             break
             ;;
+        "Quit")
+            break
+            ;;
+        *) echo invalid option;;
+    esac
+done
+
+# select from intance type options - micro, small, medium, large and storage
+
+PS3='Please enter your instance type: '
+options=("micro" "small" "medium" "large" "storage" "Quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "micro")
+            TYPE=micro
+            break
+            ;;
+        "small")
+            TYPE=small
+            break
+            ;;  
+        "medium")
+            TYPE=medium
+            break
+            ;; 
+        "large")
+            TYPE=large
+            break
+            ;; 
+        "storage")
+            TYPE=storage
+            break
+            ;; 
         "Quit")
             break
             ;;
