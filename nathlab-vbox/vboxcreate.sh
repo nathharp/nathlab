@@ -67,3 +67,20 @@ echo "CONFIRMATION:"
 echo "OS selection is $OS"
 echo "instance type is $TYPE"
 echo "quantity: $QUANTITY"
+
+PS3='do you want to continue?'
+options=("Yes" "Quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "Yes")
+            echo "continuing"
+            break
+            ;;
+        "Quit")
+        	echo "quitting"
+            exit
+            ;;
+        *) echo invalid option;;
+    esac
+done
