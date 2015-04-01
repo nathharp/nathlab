@@ -73,7 +73,7 @@ elif [ $TYPE == "medium" ]; then
 	DISKS=1
 	DISK1=20
 elif [ $TYPE == "large" ]; then
-	VCPUS=2
+	VCPUS=4
 	RAM=4096
 	DISKS=1
 	DISK1=30
