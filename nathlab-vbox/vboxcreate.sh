@@ -157,4 +157,6 @@ VBoxManage modifyvm $NAME --nic1 hostonly --hostonlyadapter1 vboxnet0 --nictype1
 
 cp ~/VirtualBox\ VMs/diskimages/$OS.vdi ~/VirtualBox\ VMs/$NAME
 
-VBoxManage storageattach $NAME --storagectl 
+VBoxManage storagectl $NAME --name SAS --add sas --controller LsiLogicSAS --bootable on
+
+VBoxManage storageattach $NAME --storagectl SAS --port 1 --type hdd --medium ~/VirtualBox\ VMs/$NAME/$OS.vdi
