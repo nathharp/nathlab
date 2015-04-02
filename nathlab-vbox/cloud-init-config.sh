@@ -34,3 +34,13 @@ salt_minion:
   conf:
     master: labmgt
 EOF
+
+# make the iso image
+
+mkisofs -output $1-cidata.iso -volid cidata -joliet -rock user-data meta-data
+
+mv $1-cidata.iso ~/Virtualbox\ VMs/$1/
+
+cd ~/tmp
+
+rm -rf $1-tmpconfig
