@@ -152,3 +152,9 @@ VBoxManage modifyvm $NAME --nic1 hostonly --hostonlyadapter1 vboxnet0 --nictype1
 # setting some default VM settings
 
 VBoxManage modifyvm $NAME --firmware efi
+
+# storage!
+
+cp ~/VirtualBox\ VMs/diskimages/$OS.vdi ~/VirtualBox\ VMs/$NAME
+
+VBoxManage storageattach $NAME --storagectl 
