@@ -20,6 +20,7 @@ ssh_authorized_keys:
 bootcmd:
  - echo 10.20.0.4 labmgt >> /etc/hosts
 
+
 yum_repos:
     local-lab-centos-otherpkgs:
         baseurl: http://labmgt/repo/centos7/bootstrap/
@@ -43,4 +44,4 @@ mv $1-cidata.iso ~/Virtualbox\ VMs/$1/
 
 cd ~/tmp
 
-rm -rf $1-tmpconfig
+#rm -rf $1-tmpconfig

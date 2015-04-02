@@ -156,3 +156,14 @@ cp ~/VirtualBox\ VMs/diskimages/$OS.vdi ~/VirtualBox\ VMs/$NAME/$NAME-disk1.vdi
 VBoxManage storagectl $NAME --name SAS --add sas --controller LsiLogicSAS --bootable on
 
 VBoxManage storageattach $NAME --storagectl SAS --port 0 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$NAME/$NAME-disk1.vdi
+
+# cloud-init configuration
+
+./cloud-init-config.sh $NAME
+
+# mount cloud-init 
+
+#VBoxManage storageattach $NAME --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/$NAME/$NAME-cidata.iso
+VBoxManage storageattach $NAME --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/centos7seed.iso
+
+
