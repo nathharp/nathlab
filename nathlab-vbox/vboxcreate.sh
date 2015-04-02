@@ -87,10 +87,6 @@ else
 	exit
 fi
 
-echo $VCPUS
-echo $RAM
-echo $DISKS
-echo $DISK1
 
 # query quantities
 
@@ -155,8 +151,8 @@ VBoxManage modifyvm $NAME --nic1 hostonly --hostonlyadapter1 vboxnet0 --nictype1
 
 # storage!
 
-cp ~/VirtualBox\ VMs/diskimages/$OS.vdi ~/VirtualBox\ VMs/$NAME
+cp ~/VirtualBox\ VMs/diskimages/$OS.vdi ~/VirtualBox\ VMs/$NAME/$NAME-disk1.vdi
 
 VBoxManage storagectl $NAME --name SAS --add sas --controller LsiLogicSAS --bootable on
 
-VBoxManage storageattach $NAME --storagectl SAS --port 1 --type hdd --medium ~/VirtualBox\ VMs/$NAME/$OS.vdi
+VBoxManage storageattach $NAME --storagectl SAS --port 0 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$NAME/$NAME-disk1.vdi
