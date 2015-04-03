@@ -45,6 +45,9 @@ packages:
 salt_minion:
   conf:
     master: labmgt
+    
+runcmd:
+  - systemctl enable salt-minion.service
 EOF
 
 # make the iso image
