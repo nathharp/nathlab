@@ -163,7 +163,7 @@ VBoxManage storageattach $NAME --storagectl SAS --port 0 --type hdd --setuuid ""
 
 # mount cloud-init 
 
-#VBoxManage storageattach $NAME --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/$NAME/$NAME-cidata.iso
-VBoxManage storageattach $NAME --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/centos7seed.iso
+VBoxManage storageattach $NAME --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/$NAME/$NAME-cidata.iso
+#VBoxManage storageattach $NAME --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/9/9-cidata.iso
 
 
