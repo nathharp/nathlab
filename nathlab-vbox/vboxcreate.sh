@@ -91,9 +91,9 @@ fi
 # query quantities
 
 
-#default=1
-#read -p "how many instances do you require [$default]: " REPLY
-#QUANTITY=${REPLY:-$default}
+default=1
+read -p "how many instances do you require [$default]: " REPLY
+QUANTITY=${REPLY:-$default}
 
 # instance name
 
@@ -105,7 +105,7 @@ NAME=${REPLY}
 echo "CONFIRMATION:"
 echo "OS selection is $OS"
 echo "instance type is $TYPE"
-#echo "quantity: $QUANTITY"
+echo "quantity: $QUANTITY"
 echo "name: $NAME"
 
 PS3='do you want to continue?: '
@@ -125,45 +125,44 @@ do
     esac
 done
 
-# for i in ${seq 1 $QUANTITY}
-#do
-#
-#	# lets work out the naming if there is more than one instance
-#	if [ $QUANTITY == 1 ]
-#	
-#
-#done
+# multiple instances!
 
-# create and register VM
-VBoxManage createvm --name $NAME --ostype $OSTYPE --register
+NUMBER=1
+while [ $NUMBER -le $QUANTITY ]
+	do
+		
 
-# set VCPUs and RAM
+		# create and register VM
+		VBoxManage createvm --name $NAME$NUMBER --ostype $OSTYPE --register
 
-VBoxManage modifyvm $NAME --cpus $VCPUS --memory $RAM
+		# set VCPUs and RAM
 
-# connect the network interface
+		VBoxManage modifyvm $NAME$NUMBER --cpus $VCPUS --memory $RAM
 
-VBoxManage modifyvm $NAME --nic1 hostonly --hostonlyadapter1 vboxnet0 --nictype1 virtio
+		# connect the network interface
 
-# setting some default VM settings
+		VBoxManage modifyvm $NAME$NUMBER --nic1 hostonly --hostonlyadapter1 vboxnet0 --nictype1 virtio
 
-# VBoxManage modifyvm $NAME --firmware efi
+		# setting some default VM settings
 
-# storage!
+		# VBoxManage modifyvm $NAME$NUMBER --firmware efi
 
-cp ~/VirtualBox\ VMs/diskimages/$OS.vdi ~/VirtualBox\ VMs/$NAME/$NAME-disk1.vdi
+		# storage!
 
-VBoxManage storagectl $NAME --name SAS --add sas --controller LsiLogicSAS --bootable on
+		cp ~/VirtualBox\ VMs/diskimages/$OS.vdi ~/VirtualBox\ VMs/$NAME$NUMBER/$NAME$NUMBER-disk1.vdi
 
-VBoxManage storageattach $NAME --storagectl SAS --port 0 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$NAME/$NAME-disk1.vdi
+		VBoxManage storagectl $NAME$NUMBER --name SAS --add sas --controller LsiLogicSAS --bootable on
 
-# cloud-init configuration
+		VBoxManage storageattach $NAME$NUMBER --storagectl SAS --port 0 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$NAME$NUMBER/$NAME$NUMBER-disk1.vdi
 
-./cloud-init-config.sh $NAME
+		# cloud-init configuration
 
-# mount cloud-init 
+		./cloud-init-config.sh $NAME$NUMBER
 
-VBoxManage storageattach $NAME --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/$NAME/$NAME-cidata.iso
-#VBoxManage storageattach $NAME --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/9/9-cidata.iso
+		# mount cloud-init 
 
-
+		VBoxManage storageattach $NAME$NUMBER --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/$NAME$NUMBER/$NAME$NUMBER-cidata.iso
+		#VBoxManage storageattach $NAME$NUMBER --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/9/9-cidata.iso
+		
+		NUMBER=$[$NUMBER+1]
+	done
