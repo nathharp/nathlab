@@ -100,13 +100,6 @@ QUANTITY=${REPLY:-$default}
 read -p "what do you want to call the instance?: " REPLY
 NAME=${REPLY}
 
-# multiple instances!
-if [ $QUANTITY == 1 ]; then
-	VMNAME=$NAME
-else
-	VMNAME=$NAME$NUMBER
-fi
-
 # summary before creation
 
 echo "CONFIRMATION:"
