@@ -24,7 +24,7 @@ done
 # select from intance type options - micro, small, medium, large and storage
 
 PS3='Please enter your instance type: '
-options=("micro" "small" "medium" "large" "storage" "Quit")
+options=("micro" "small" "medium" "large" "ceph" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -44,8 +44,8 @@ do
             TYPE=large
             break
             ;; 
-        "storage")
-            TYPE=storage
+        "ceph")
+            TYPE=ceph
             break
             ;; 
         "Quit")
@@ -77,7 +77,7 @@ elif [ $TYPE == "large" ]; then
 	RAM=4096
 	DISKS=1
 	DISK1=30
-elif [ $TYPE == "storage" ]; then
+elif [ $TYPE == "ceph" ]; then
 	VCPUS=2
 	RAM=2048
 	DISKS=3
@@ -154,14 +154,21 @@ while [ $NUMBER -le $QUANTITY ]
 		VBoxManage storagectl $NAME$NUMBER --name SAS --add sas --controller LsiLogicSAS --bootable on
 
 		VBoxManage storageattach $NAME$NUMBER --storagectl SAS --port 0 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$NAME$NUMBER/$NAME$NUMBER-disk1.vdi
-
+		if [ $TYPE == ceph ]; then
+			VBoxManage createhd  --filename ~/VirtualBox\ VMs/$NAME$NUMBER/$NAME$NUMBER-disk2.vdi --size 10240 --format VDI  --variant Standard
+			VBoxManage storageattach $NAME$NUMBER --storagectl SAS --port 1 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$NAME$NUMBER/$NAME$NUMBER-disk2.vdi
+			VBoxManage createhd  --filename ~/VirtualBox\ VMs/$NAME$NUMBER/$NAME$NUMBER-disk3.vdi --size 10240 --format VDI  --variant Standard
+			VBoxManage storageattach $NAME$NUMBER --storagectl SAS --port 2 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$NAME$NUMBER/$NAME$NUMBER-disk3.vdi
+			VBoxManage modifyvm $NAME$NUMBER --nic2 hostonly --hostonlyadapter2 vboxnet1 --nictype2 virtio
+		else :
+		fi
 		# cloud-init configuration
 
 		./cloud-init-config.sh $NAME$NUMBER
 
 		# mount cloud-init 
 
-		VBoxManage storageattach $NAME$NUMBER --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/$NAME$NUMBER/$NAME$NUMBER-cidata.iso
+		VBoxManage storageattach $NAME$NUMBER --storagectl SAS --port 3 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/$NAME$NUMBER/$NAME$NUMBER-cidata.iso
 		#VBoxManage storageattach $NAME$NUMBER --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/9/9-cidata.iso
 		
 		NUMBER=$[$NUMBER+1]
