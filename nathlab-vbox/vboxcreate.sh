@@ -179,7 +179,7 @@ while [ $NUMBER -le $QUANTITY ]
 		# mount cloud-init 
 		
 		VBoxManage storageattach $VMNAME --storagectl SAS --port 3 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/$VMNAME/$VMNAME-cidata.iso
-		#VBoxManage storageattach $VMNAME --storagectl SAS --port 1 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/9/9-cidata.iso
+		
 		
 		NUMBER=$[$NUMBER+1]
 	done
