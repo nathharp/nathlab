@@ -125,17 +125,19 @@ do
     esac
 done
 
-# multiple instances!
-if [ $QUANTITY == 1 ]; then
-	VMNAME=$NAME
-else
-	VMNAME=$NAME$NUMBER
-fi
-NUMBER=1
+
+export NUMBER=1
 	
 while [ $NUMBER -le $QUANTITY ]
 	do
+		# multiple instances!
 		
+	
+		if [ $QUANTITY -eq 1 ]; then
+			VMNAME=$NAME
+		else
+			VMNAME=$NAME$NUMBER
+		fi
 
 		# create and register VM
 		VBoxManage createvm --name $VMNAME --ostype $OSTYPE --register
@@ -146,7 +148,7 @@ while [ $NUMBER -le $QUANTITY ]
 
 		# connect the network interface
 
-		VBoxManage modifyvm $VMNAME --nic1 hostonly --hostonlyadapter1 vboxnet0 --nictype1 virtio
+		VBoxManage modifyvm $VMNAME --nic1 hostonly --hostonlyadapter1 vboxnet0 --nictype1 82545EM
 
 		# setting some default VM settings
 
@@ -156,7 +158,9 @@ while [ $NUMBER -le $QUANTITY ]
 
 		cp ~/VirtualBox\ VMs/diskimages/$OS.vdi ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk1.vdi
 
+		VBoxManage storagectl $VMNAME --name IDE --add ide --controller PIIX4 --bootable on
 		VBoxManage storagectl $VMNAME --name SAS --add sas --controller LsiLogicSAS --bootable on
+		
 
 		VBoxManage storageattach $VMNAME --storagectl SAS --port 0 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk1.vdi
 		if [ $TYPE == ceph ]; then
@@ -164,21 +168,22 @@ while [ $NUMBER -le $QUANTITY ]
 			VBoxManage storageattach $VMNAME --storagectl SAS --port 1 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk2.vdi
 			VBoxManage createhd  --filename ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk3.vdi --size 10240 --format VDI  --variant Standard
 			VBoxManage storageattach $VMNAME --storagectl SAS --port 2 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk3.vdi
-			VBoxManage modifyvm $VMNAME --nic2 hostonly --hostonlyadapter2 vboxnet1 --nictype2 virtio
+			VBoxManage modifyvm $VMNAME --nic2 hostonly --hostonlyadapter2 vboxnet1 --nictype2 82545EM
 		else :
 		fi
 		# cloud-init configuration
 
 		./cloud-init-config.sh $VMNAME
+		sleep 5
 
 		# check that the cloud-init config has appeared
-		while [ ! -f ~/VirtualBox\ VMs/$VMNAME/$VMNAME-cidata.iso ]
-			do
-				sleep 1
-			done
+		#while [ ! -f ~/VirtualBox\ VMs/$VMNAME/$VMNAME-cidata.iso ]
+		#	do
+		#		sleep 2
+		#	done
 		# mount cloud-init 
 		
-		VBoxManage storageattach $VMNAME --storagectl SAS --port 3 --type dvddrive --setuuid "" --medium ~/VirtualBox\ VMs/$VMNAME/$VMNAME-cidata.iso
+		VBoxManage storageattach $VMNAME --storagectl IDE --port 0 --type dvddrive --setuuid "" --device 0 --medium ~/VirtualBox\ VMs/$VMNAME/$VMNAME-cidata.iso
 		
 		
 		NUMBER=$[$NUMBER+1]

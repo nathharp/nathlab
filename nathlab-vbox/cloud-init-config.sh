@@ -8,6 +8,8 @@ mkdir -p ~/tmp/$1-tmpconfig
 cd  ~/tmp/$1-tmpconfig
 echo "local-hostname: $1.nathlab" > meta-data
 
+
+
 # do some user data
 
 cat << EOF > user-data
