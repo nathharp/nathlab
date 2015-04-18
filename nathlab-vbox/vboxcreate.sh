@@ -174,17 +174,18 @@ while [ $NUMBER -le $QUANTITY ]
 		# cloud-init configuration
 
 		./cloud-init-config.sh $VMNAME
-		sleep 5
 
 		# check that the cloud-init config has appeared
-		#while [ ! -f ~/VirtualBox\ VMs/$VMNAME/$VMNAME-cidata.iso ]
-		#	do
-		#		sleep 2
-		#	done
+		while [ ! -f ~/VirtualBox\ VMs/$VMNAME/$VMNAME-cidata.iso ]
+			do
+				sleep 2
+			done
+			sleep 2
 		# mount cloud-init 
 		
 		VBoxManage storageattach $VMNAME --storagectl IDE --port 0 --type dvddrive --setuuid "" --device 0 --medium ~/VirtualBox\ VMs/$VMNAME/$VMNAME-cidata.iso
 		
-		
+		# start the VM!
+		VBoxManage startvm $VMNAME
 		NUMBER=$[$NUMBER+1]
 	done
