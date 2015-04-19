@@ -5,7 +5,7 @@
 # OS selection
 
 PS3='Please enter your OS choice: '
-options=("CentOS7" "Quit")
+options=("CentOS7" "CentOS6" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -14,6 +14,11 @@ do
             OSTYPE=RedHat_64
             break
             ;;
+        "CentOS6")
+        	OS=centos6
+        	OSTYPE=RedHat_64
+        	break
+        	;;
         "Quit")
             break
             ;;
@@ -173,7 +178,7 @@ while [ $NUMBER -le $QUANTITY ]
 		fi
 		# cloud-init configuration
 
-		./cloud-init-config.sh $VMNAME
+		./cloud-init-config.sh $VMNAME $OS
 
 		# check that the cloud-init config has appeared
 		while [ ! -f ~/VirtualBox\ VMs/$VMNAME/$VMNAME-cidata.iso ]
