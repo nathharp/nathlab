@@ -35,6 +35,7 @@ yum_repos:
         enabled: true
         gpgcheck: false
         name: lab centos7 base
+        exclude: python-rados python-rbd
     local-lab-centos-updates:
         baseurl: http://labmgt/repo/centos7/updates/
         enabled: true
