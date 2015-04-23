@@ -85,7 +85,7 @@ elif [ $TYPE == "large" ]; then
 elif [ $TYPE == "ceph" ]; then
 	VCPUS=2
 	RAM=2048
-	DISKS=3
+	DISKS=5
 	DISK1=10
 else
 	echo "instance type broken"
@@ -171,8 +171,12 @@ while [ $NUMBER -le $QUANTITY ]
 		if [ $TYPE == ceph ]; then
 			VBoxManage createhd  --filename ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk2.vdi --size 10240 --format VDI  --variant Standard
 			VBoxManage storageattach $VMNAME --storagectl SAS --port 1 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk2.vdi
-			VBoxManage createhd  --filename ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk3.vdi --size 10240 --format VDI  --variant Standard
+			VBoxManage createhd  --filename ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk3.vdi --size 5120 --format VDI  --variant Standard
 			VBoxManage storageattach $VMNAME --storagectl SAS --port 2 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk3.vdi
+			VBoxManage createhd  --filename ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk4.vdi --size 10240 --format VDI  --variant Standard
+			VBoxManage storageattach $VMNAME --storagectl SAS --port 3 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk4.vdi
+			VBoxManage createhd  --filename ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk5.vdi --size 5120 --format VDI  --variant Standard
+			VBoxManage storageattach $VMNAME --storagectl SAS --port 4 --type hdd --setuuid "" --medium ~/VirtualBox\ VMs/$VMNAME/$VMNAME-disk5.vdi
 			VBoxManage modifyvm $VMNAME --nic2 hostonly --hostonlyadapter2 vboxnet1 --nictype2 82545EM
 		else :
 		fi
